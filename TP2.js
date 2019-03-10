@@ -89,41 +89,78 @@ function vendedoraDelMes(mes, anio) {
 
   for (var j = 0; j < local.vendedoras.length; j++) {
     vendedorasArray.push({nombre: local.vendedoras[j], venta: 0,})
-    console.log(vendedorasArray)
   }
+  
+  var biggest = 0;
 
   for (var k = 0; k < vendedorasArray.length; k++) {
+    var precioTotal = 0;
     for (var l = 0; l < ventasFiltradas.length; l++) {
-      if (vendedorasArray[k].nombre === ventasFiltradas[l].nombre ) {
-        // precioTotal = precioMaquina (ventasFiltradas[l].ventas) + precioTotal
-        // vendedorasArray[k].venta = precioTotal
-        console.log (vendedorasArray[l].nombre)
-                 
+      if (vendedorasArray[k].nombre === ventasFiltradas[l].nombreVendedora ) {
+        precioTotal = precioMaquina (ventasFiltradas[l].componentes) + precioTotal
+        vendedorasArray[k].venta = precioTotal                 
       }
+    }
+
+    if ( biggest < vendedorasArray[k].venta ) {
+      biggest = vendedorasArray[k].venta
+
+      if (biggest === vendedorasArray[k].venta) {
+        return vendedorasArray[k].nombre
+      }
+    }
+
+    }
+}
+
+console.log('La vendedora que más vendió en el mes de Febrero fue', vendedoraDelMes (2, 2019))
+
+function ventasMes(mes, anio) {
+  var ventasFiltradas = [];
+ 
+   for (var i = 0; i < local.ventas.length; i++) {
+     if (((local.ventas[i].fecha.getFullYear()) === anio) && ((local.ventas[i].fecha.getMonth() + 1) === mes)) {
+          ventasFiltradas.push(local.ventas[i])
+       }
+     }
+
+  var precioTotalMes = 0;
+
+  for (var j = 0; j < ventasFiltradas.length; j++) {
+    precioTotalMes = precioMaquina (ventasFiltradas[j].componentes) + precioTotalMes
+  }
   
-    }
-    }
-//   for (var j = 0; j < local.vendedoras.length; j++) {
-//     for (var k = 0; k < ventasFiltradas.length; k++) {
-//       if (local.vendedoras[j] === ventasFiltradas[k].nombreVendedora) {
-//          var ventasVendedoras = {
-//            nombre: local.vendedoras[j],
-//            ventas: ventasFiltradas[k].componentes 
-//          }
-
-//         ventasVendedorasArray.push(ventasVendedoras)
-//       }
-//     }
+  return precioTotalMes
     
-//     var precioTotal = 0;
+} 
 
-//     for (var l = 0; l < ventasVendedorasArray.length; l++) {
-//       if (local.vendedoras [j] === ventasVendedorasArray[l].nombre) {
-//        
-//       }}
+console.log ('Las ventas totales del mes de Febrero fueron',ventasMes (2, 2019))
 
-// }
+function ventasVendedora(nombre) {
+
+  var precioTotalMes = 0;
+
+  for (var i = 0; i < local.ventas.length; i++) {
+    if (nombre === local.ventas[i].nombreVendedora) {  
+     precioTotalMes = precioMaquina (local.ventas[i].componentes) + precioTotalMes
+    }
+  }
+ return precioTotalMes
+  }
+
+console.log ('Las ventas totales de Grace fueron', ventasVendedora ('Grace'));
+
+
+function huboVentas(mes, anio) {
+
+  for (var i = 0; i < local.ventas.length; i++) {
+    if (((local.ventas[i].fecha.getFullYear()) === anio) && ((local.ventas[i].fecha.getMonth() + 1) === mes)) {
+      return true
+      } else {
+        return false
+      }
+    }
 
 }
 
-vendedoraDelMes (1, 2019)
+console.log ('Hubo ventas?', huboVentas (1, 2019))
