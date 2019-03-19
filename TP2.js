@@ -2,11 +2,27 @@ var local = {
     vendedoras: ["Ada", "Grace", "Hedy", "Sheryl"],
   
     ventas: [
-      { fecha: new Date(2019, 1, 4), nombreVendedora: "Grace", componentes: ["Monitor GPRS 3000", "Motherboard ASUS 1500"] },
-      { fecha: new Date(2019, 0, 1), nombreVendedora: "Ada", componentes: ["Monitor GPRS 3000", "Motherboard ASUS 1500"] },
-      { fecha: new Date(2019, 0, 2), nombreVendedora: "Grace", componentes: ["Monitor ASC 543", "Motherboard MZI"] },
-      { fecha: new Date(2019, 0, 10), nombreVendedora: "Ada", componentes: ["Monitor ASC 543", "Motherboard ASUS 1200"] },
-      { fecha: new Date(2019, 0, 12), nombreVendedora: "Grace", componentes: ["Monitor GPRS 3000", "Motherboard ASUS 1200"] }
+      { fecha: new Date(2019, 1, 4), nombreVendedora: "Grace", componentes: ["Monitor GPRS 3000", "Motherboard ASUS 1500"], sucursal: 'Centro',},
+      { fecha: new Date(2019, 0, 1), nombreVendedora: "Ada", componentes: ["Monitor GPRS 3000", "Motherboard ASUS 1500"], sucursal: 'Centro', },
+      { fecha: new Date(2019, 0, 2), nombreVendedora: "Grace", componentes: ["Monitor ASC 543", "Motherboard MZI"] , sucursal: 'Centro', },
+      { fecha: new Date(2019, 0, 10), nombreVendedora: "Ada", componentes: ["Monitor ASC 543", "Motherboard ASUS 1200"] , sucursal: 'Centro', },
+      { fecha: new Date(2019, 0, 12), nombreVendedora: "Grace", componentes: ["Monitor GPRS 3000", "Motherboard ASUS 1200"], sucursal: 'Centro',  },
+
+      { fecha: new Date(2019, 1, 12), nombreVendedora: "Hedy", componentes: ['Monitor GPRS 3000', 'HDD Toyiva'], sucursal: 'Centro',  },
+      { fecha: new Date(2019, 1, 24), nombreVendedora: "Sheryl", componentes: ['Motherboard ASUS 1500', 'HDD Wezter Dishital'], sucursal: 'Caballito',  },
+      { fecha: new Date(2019, 1, 01), nombreVendedora: "Ada", componentes:['Motherboard MZI', 'RAM Quinston Fury'], sucursal: 'Centro',  },
+      { fecha: new Date(2019, 1, 11), nombreVendedora: "Grace", componentes: ['Monitor ASC 543', 'RAM Quinston'], sucursal: 'Caballito',  },
+      { fecha: new Date(2019, 1, 15), nombreVendedora: "Ada", componentes: ['Motherboard ASUS 1200', 'RAM Quinston Fury'], sucursal: 'Centro', },
+      { fecha: new Date(2019, 1, 12), nombreVendedora: "Hedy", componentes: ['Motherboard ASUS 1500', 'HDD Toyiva'], sucursal: 'Caballito', },
+      { fecha: new Date(2019, 1, 21), nombreVendedora: "Grace", componentes: ['Motherboard MZI', 'RAM Quinston'], sucursal: 'Centro', },      
+      { fecha: new Date(2019, 1, 08), nombreVendedora: "Sheryl", componentes:['Monitor ASC 543', 'HDD Wezter Dishital'], sucursal: 'Centro', },
+      { fecha: new Date(2019, 1, 16), nombreVendedora: "Sheryl", componentes:['Monitor GPRS 3000', 'RAM Quinston Fury'], sucursal: 'Centro', },
+      { fecha: new Date(2019, 1, 27), nombreVendedora: "Hedy", componentes:['Motherboard ASUS 1200', 'HDD Toyiva'], sucursal: 'Caballito', },
+      { fecha: new Date(2019, 1, 22), nombreVendedora: "Grace", componentes:['Monitor ASC 543', 'HDD Wezter Dishital'], sucursal: 'Centro', },      
+      { fecha: new Date(2019, 1, 05), nombreVendedora: "Ada", componentes:['Motherboard ASUS 1500', 'RAM Quinston'], sucursal: 'Centro', },     
+      { fecha: new Date(2019, 1, 01), nombreVendedora: "Grace", componentes:['Motherboard MZI', 'HDD Wezter Dishital'], sucursal: 'Centro', },
+      { fecha: new Date(2019, 1, 07), nombreVendedora: "Sheryl", componentes: ['Monitor GPRS 3000', 'RAM Quinston'], sucursal: 'Caballito', }, 
+      { fecha: new Date(2019, 1, 14), nombreVendedora: "Ada", componentes: ['Motherboard ASUS 1200', 'HDD Toyiva'], sucursal: 'Centro', },
     ],
   
     precios: [
@@ -92,13 +108,14 @@ function vendedoraDelMes(mes, anio) {
   }
   
   var biggest = 0;
+  var mejorvendedora = ''
 
   for (var k = 0; k < vendedorasArray.length; k++) {
     var precioTotal = 0;
     for (var l = 0; l < ventasFiltradas.length; l++) {
       if (vendedorasArray[k].nombre === ventasFiltradas[l].nombreVendedora ) {
         precioTotal = precioMaquina (ventasFiltradas[l].componentes) + precioTotal
-        vendedorasArray[k].venta = precioTotal                 
+        vendedorasArray[k].venta = precioTotal             
       }
     }
 
@@ -106,11 +123,13 @@ function vendedoraDelMes(mes, anio) {
       biggest = vendedorasArray[k].venta
 
       if (biggest === vendedorasArray[k].venta) {
-        return vendedorasArray[k].nombre
+        mejorvendedora = vendedorasArray[k].nombre
       }
     }
 
     }
+
+  return mejorvendedora
 }
 
 console.log('La vendedora que más vendió en el mes de Febrero fue', vendedoraDelMes (2, 2019))
@@ -146,21 +165,147 @@ function ventasVendedora(nombre) {
     }
   }
  return precioTotalMes
-  }
+ }
 
 console.log ('Las ventas totales de Grace fueron', ventasVendedora ('Grace'));
 
 
 function huboVentas(mes, anio) {
 
+  var ventas = false;
   for (var i = 0; i < local.ventas.length; i++) {
     if (((local.ventas[i].fecha.getFullYear()) === anio) && ((local.ventas[i].fecha.getMonth() + 1) === mes)) {
-      return true
-      } else {
-        return false
-      }
+      ventas = true
     }
-
+  }
+ return ventas
 }
 
 console.log ('Hubo ventas?', huboVentas (1, 2019))
+
+function componenteMasVendido() {
+
+  var componentesArray = [];
+  var ventas = 0;
+
+  for (var i = 0; i < local.precios.length; i++) {
+    componentesArray.push({componente: local.precios[i].componente, ventas: 0,})
+    componentesArray[i].ventas = cantidadVentasComponente(local.precios[i].componente)
+  }
+
+  var biggest = 0;
+
+  for (var j = 0; j < componentesArray.length; j++) {
+    if ( biggest < componentesArray[j].ventas) {
+      biggest = componentesArray[j].ventas
+  
+      if (biggest === componentesArray[j].ventas) {
+        return componentesArray[j].componente
+      }
+    }
+  }
+}
+
+console.log (componenteMasVendido())
+
+function ventasSucursal(sucursal) {
+
+  var precioTotalMes = 0;
+  for (var i = 0; i < local.ventas.length; i++) {
+    if (sucursal === local.ventas[i].sucursal) {  
+     precioTotalMes = precioMaquina (local.ventas[i].componentes) + precioTotalMes
+    }
+  }
+ return precioTotalMes
+  }
+
+
+  console.log (ventasSucursal('Grace'))
+
+  // function ventas(parametro, propiedad) {
+
+  //   var precioTotalMes = 0;
+  //   for (var i = 0; i < local.ventas.length; i++) {
+  //     if (parametro === local.ventas[i][propiedad]) {  
+  //      precioTotalMes = precioMaquina (local.ventas[i].componentes) + precioTotalMes
+  //     }
+  //   }
+  //  return precioTotalMes
+  //   }
+
+  //   console.log(ventas('Grace', 'nombreVendedora'))
+  //   console.log (ventas('Centro', 'sucursal'))
+  // 
+  //  Este código sirve para ventas sucursal y ventas vendedora
+  
+
+
+
+function sucursalDelMes(mes, anio) {
+    var ventasFiltradas = [];
+   
+     for (var i = 0; i < local.ventas.length; i++) {
+       if (((local.ventas[i].fecha.getFullYear()) === anio) && ((local.ventas[i].fecha.getMonth() + 1) === mes)) {
+            ventasFiltradas.push(local.ventas[i])
+         }
+       }
+    
+     var sucursales = ['Centro', 'Caballito'] 
+     var sucursalesArray = [];
+   
+     for (var j = 0; j < sucursales.length; j++) {
+       sucursalesArray.push({nombre: sucursales[j], venta: 0,})
+     }
+     
+     var biggest = 0;
+     var sucursaldelmes = 0;
+   
+     for (var k = 0; k < sucursales.length; k++) {
+       var precioTotal = 0;
+       for (var l = 0; l < ventasFiltradas.length; l++) {
+         if (sucursalesArray[k].nombre === ventasFiltradas[l].sucursal) {
+           precioTotal = precioMaquina (ventasFiltradas[l].componentes) + precioTotal
+           sucursalesArray[k].venta = precioTotal   
+         }
+       }
+   
+       if ( biggest < sucursalesArray[k].venta ) {
+         biggest = sucursalesArray[k].venta
+   
+         if (biggest === sucursalesArray[k].venta) {
+           sucursaldelmes = sucursalesArray[k].nombre
+         }
+       }
+   }
+   return sucursaldelmes
+}
+
+console.log(sucursalDelMes(2, 2019))
+
+function renderPorMes() {
+
+  var mesesNum = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  var mesesLet = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+
+  for (var i = 0; i < mesesNum.length; i++) {
+    document.write ('Total de ventas de ', mesesLet[i], ': ', ventasMes(mesesNum[i], 2019), '<br>')
+  }
+  
+}
+
+renderPorMes()
+
+document.write(' ')
+
+function renderPorSucursal () {
+
+  var sucursales = ['Centro', 'Caballito'] 
+
+  for (var i = 0; i < sucursales.length; i++) {
+    document.write ('Total de ventas de ', sucursales[i], ': ', ventasSucursal(sucursales[i]), '<br>')
+  }
+
+}
+
+renderPorSucursal();
+
