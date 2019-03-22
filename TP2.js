@@ -186,7 +186,6 @@ console.log ('Hubo ventas?', huboVentas (1, 2019))
 function componenteMasVendido() {
 
   var componentesArray = [];
-  var ventas = 0;
 
   for (var i = 0; i < local.precios.length; i++) {
     componentesArray.push({componente: local.precios[i].componente, ventas: 0,})
@@ -206,7 +205,7 @@ function componenteMasVendido() {
   }
 }
 
-console.log (componenteMasVendido())
+console.log ('El componente más vendido fue', componenteMasVendido())
 
 function ventasSucursal(sucursal) {
 
@@ -220,7 +219,7 @@ function ventasSucursal(sucursal) {
   }
 
 
-  console.log (ventasSucursal('Grace'))
+  console.log ('El total de ventas de Caballito fue', ventasSucursal('Caballito'))
 
   // function ventas(parametro, propiedad) {
 
@@ -280,7 +279,7 @@ function sucursalDelMes(mes, anio) {
    return sucursaldelmes
 }
 
-console.log(sucursalDelMes(2, 2019))
+console.log('La sucursal del mes fue', sucursalDelMes(2, 2019))
 
 function renderPorMes() {
 
@@ -309,3 +308,58 @@ function renderPorSucursal () {
 
 renderPorSucursal();
 
+function vendedoraDelAnio(anio) {
+  var ventasFiltradas = [];
+ 
+   for (var i = 0; i < local.ventas.length; i++) {
+     if (((local.ventas[i].fecha.getFullYear()) === anio)) {
+          ventasFiltradas.push(local.ventas[i])
+       }
+     }
+ 
+   var vendedorasArray = [];
+ 
+   for (var j = 0; j < local.vendedoras.length; j++) {
+     vendedorasArray.push({nombre: local.vendedoras[j], venta: 0,})
+   }
+   
+   var biggest = 0;
+   var mejorvendedora = ''
+ 
+   for (var k = 0; k < vendedorasArray.length; k++) {
+     var precioTotal = 0;
+     for (var l = 0; l < ventasFiltradas.length; l++) {
+       if (vendedorasArray[k].nombre === ventasFiltradas[l].nombreVendedora ) {
+         precioTotal = precioMaquina (ventasFiltradas[l].componentes) + precioTotal
+         vendedorasArray[k].venta = precioTotal             
+       }
+     }
+ 
+     if ( biggest < vendedorasArray[k].venta ) {
+       biggest = vendedorasArray[k].venta
+ 
+       if (biggest === vendedorasArray[k].venta) {
+         mejorvendedora = vendedorasArray[k].nombre
+       }
+     }
+ 
+     }
+ 
+   return mejorvendedora
+ }
+
+
+function render() {
+  document.write ('Ventas por mes: </br>')
+  renderPorMes()
+
+  document.write ('Ventas por sucursal: </br>')
+  renderPorSucursal()
+
+  document.write ('Producto estrella: ', componenteMasVendido(), ' </br>' )
+
+  document.write ('Vendedora que más ingresos generó: ', vendedoraDelAnio(2019))
+
+}
+
+render()
