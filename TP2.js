@@ -1,3 +1,9 @@
+// Vic, te dejo mis observaciones a tu TP salpicadas a lo largo de tu trabajo. 
+// En general no son mas que maneras alternativas de hacer tus funciones para que vayas explorando si te interesa, 
+//     ya que tu codigo esta muy bien: es claro, solucionas muy bien las funciones y se nota que tenes muy en claro los 
+//     conceptos principales. 
+//     Felicitaciones y segui asi!
+
 var local = {
     vendedoras: ["Ada", "Grace", "Hedy", "Sheryl"],
   
@@ -53,6 +59,9 @@ function precioMaquina(componentes) {
       if (componentes[i] === local.precios[j].componente) {
         precio1 = local.precios[j].precio
         precio2 = precio2 + precio1
+          // No pareciera ser necesario en este caso declarar dos variables
+          // si podemos hacer algo como
+          // precio1 += local.precios[j].precio
       }
     
     }
@@ -132,6 +141,34 @@ function vendedoraDelMes(mes, anio) {
   return mejorvendedora
 }
 
+// te dejo una manera alternativa, mas breve, por si queres explorarla:
+
+// function vendedoraDelMes(mes, anio) {
+//   var ventasVendedoras = {};
+
+//   for (var i = 0; i < local.ventas.length; i++) {
+//     if (local.ventas[i].fecha.getMonth() + 1 === mes && local.ventas[i].fecha.getFullYear() === anio) {
+//       var vendedora = local.ventas[i].nombreVendedora;
+//       if (!ventasVendedoras[vendedora]) {
+//         ventasVendedoras[vendedora] = 0;
+//       }
+
+//       ventasVendedoras[vendedora] += precioMaquina( local.ventas[i].componentes );
+//     }
+//   }
+
+//   var max = vendedoras[0];
+
+//   for (var i = 0; i < vendedoras.length; i++) {
+//     if (max && ventasVendedoras[vendedoras[i]] > ventasVendedoras[max]) {
+//       max = vendedoras[i];
+//     }
+//   }
+
+//   return max;
+// }
+
+
 console.log('La vendedora que más vendió en el mes de Febrero fue', vendedoraDelMes (2, 2019))
 
 function ventasMes(mes, anio) {
@@ -153,6 +190,18 @@ function ventasMes(mes, anio) {
     
 } 
 
+// una manera mas breve, aunque mas abstracta, seria esta:
+// function ventasMes(mes, anio) {
+//   var total = 0;
+//   for (var i = 0; i < ventas.length; i++) {
+//     if (local.ventas[i].fecha.getMonth() + 1 === mes && local.ventas[i].fecha.getFullYear() === anio) {
+//       total += precioMaquina( ventas[i].componentes );
+//     }
+//   }
+//   return total;
+// }
+
+
 console.log ('Las ventas totales del mes de Febrero fueron',ventasMes (2, 2019))
 
 function ventasVendedora(nombre) {
@@ -162,6 +211,8 @@ function ventasVendedora(nombre) {
   for (var i = 0; i < local.ventas.length; i++) {
     if (nombre === local.ventas[i].nombreVendedora) {  
      precioTotalMes = precioMaquina (local.ventas[i].componentes) + precioTotalMes
+        // o mas brevemente:
+        // precioTotalMes += precioMaquina(local.ventas[i].componentes)
     }
   }
  return precioTotalMes
@@ -180,6 +231,12 @@ function huboVentas(mes, anio) {
   }
  return ventas
 }
+
+// te dejo una version alternativa super breve para romperse la cabeza:
+// function huboVentas (mes, anio) {
+//   return ventasMes(mes, anio) > 0;
+// }
+
 
 console.log ('Hubo ventas?', huboVentas (1, 2019))
 
@@ -237,6 +294,17 @@ function ventasSucursal(sucursal) {
   // 
   //  Este código sirve para ventas sucursal y ventas vendedora
   
+// Otra manera, pasando un solo parametro, seria asi:
+
+// function ventas(nombre) {
+//     var total = 0;
+//     for (var i = 0; i < local.ventas.length; i++) {
+//         if (local.ventas[i].sucursal === nombre || local.ventas[i].nombreVendedora === nombre) {
+//             total += precioMaquina(local.ventas[i].componentes);
+//         }
+//     }
+//     return total;
+// }
 
 
 
